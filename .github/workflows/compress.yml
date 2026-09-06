@@ -20,7 +20,8 @@ on:
     - cron: '00 23 * * 0'
 
 concurrency:
-  group: ${{github.workflow}} - ${{github.ref}}
+  # Prefer PR number: github.ref can be the base branch and collide with push.
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
